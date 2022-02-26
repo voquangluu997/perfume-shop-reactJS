@@ -1,6 +1,5 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { Row } from "react-bootstrap";
 
 import { FaFacebook, FaGithub, FaEnvelope } from "react-icons/fa";
 

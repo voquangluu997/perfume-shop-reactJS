@@ -1,0 +1,166 @@
+{
+  "core": {
+    "validationMessages": {
+      "length": "The length is {{length}} characters!",
+      "minLength": "Minimum is {{length}} characters!",
+      "maxLength": "Maximum is {{length}} characters!",
+      "required": "This field is required!",
+      "empty": "Empty",
+      "numeric": "Must be digit!",
+      "email": "Must be an email!",
+      "date": "Invalid date!"
+    },
+    "navbar": {
+      "labels": {
+        "home": "Home",
+        "photoRoll": "Photo Roll",
+        "diary": "Diary"
+      }
+    },
+      "changePassword": {
+        "title": "Change Password",
+        "labels": {
+          "currentPassword": "Current Password",
+          "newPassword": "New Password",
+          "currentPasswordPlaceholder": "Enter current password",
+          "newPasswordPlaceholder": "Enter new password",
+          "success": "Change password successfully"
+        },
+        "actions": {
+          "save": "Save",
+          "cancel": "Cancel"
+        },
+        "remoteErrors": {
+          "ERROR_USER_WRONG_PASSWORD": "Wrong password!"
+        }
+      },
+     
+    "login": {
+      "actions": {
+        "login": "Log in",
+        "createNewAccount": "Create a new account"
+      },
+      "labels": {
+        "logoSubtitle": "me, you & our memories",
+        "email": "Email",
+        "password": "Password",
+        "forgotPassword": "Forgot password?",
+        "emailPlaceholder": "Enter email",
+        "passwordPlaceholder": "Enter password",
+        "noAccount": "Don't have an account yet?"
+      },
+      "messages": {
+        "invalidEmail": "Please enter a valid email",
+        "failure": "Failure, try again!"
+      },
+      "remoteErrors": {
+        "ERROR_LOGIN_WRONG_EMAIL_OR_PASSWORD": "Email or Password is invalid",
+        "ERROR_LOGIN_EMAIL_NOT_VERIFY": "This email has not been verified"
+      },
+      "title": "Login"
+    },
+    "register": {
+      "actions": {
+        "createAccount": "Create Account",
+        "login": "Login"
+      },
+      "labels": {
+        "createANewAccount": "Create a new account",
+        "email": "Email",
+        "password": "Password",
+        "name": "Name",
+        "birthday": "Birthday",
+        "emailPlaceholder": "Enter email",
+        "passwordPlaceholder": "Enter password",
+        "namePlaceholder": "Enter your name",
+        "alreadyHaveAnAccount": "Already have an account?"
+      },
+      "title": "Register",
+      "messages": {
+        "failure": "Failure, try again!"
+      },
+      "remoteErrors": {
+        "ERROR_REGISTER_EMAIL_ALREADY_EXISTS": "This email has been registered!"
+      }
+    },
+    "registerSuccess": {
+      "actions": {
+        "continue": "Continue"
+      },
+      "labels": {
+        "yourAccountHasBeenCreated": "Your account has been created",
+        "welcome": "Welcome {{name}},\nthanks for choosing us to save your love memories.\nPlease verify your email!"
+      },
+      "title": "Register Success"
+    },
+    "forgotPassword": {
+      "actions": {
+        "sendCode": "Send Code"
+      },
+      "description": "Enter your email here then check your mailbox to receive the verification code to change password.",
+      "labels": {
+        "email": "Email",
+        "emailPlaceholder": "Enter email",
+        "formTitle": "forgot password?"
+      },
+      "messages": {
+        "failure": "Failed to send reset request"
+      },
+      "remoteErrors": {
+        "EMAIL_UN_REGISTER": "Email is not registered",
+        "ERROR_USER_FORGOT_PASSWORD_PLEASE_TRY_AGAIN_IN_ONE_MINUTE": "Please try again in one minute!"
+      },
+      "title": "Forgot Password"
+    },
+    "changePassword": {
+      "actions": {
+        "confirm": "Confirm"
+      },
+      "description1": "Enter the verification code in ",
+      "description2": " and set your new password.",
+      "labels": {
+        "code": "Verification Code",
+        "newPassword": "New password",
+        "codePlaceholder": "Enter Code",
+        "newPasswordPlaceholder": "Enter new password",
+        "formTitle": "Forgot password?"
+      },
+      "messages": {
+        "failure": "Failed to send change password request"
+      },
+      "remoteErrors": {
+        "ERROR_USER_CODE_RESET_PASSWORD_NOT_FOUND": "The code is incorect!",
+        "ERROR_USER_CODE_RESET_PASSWORD_EXPIRED": "The code is expired!"
+      },
+      "title": "Change Password"
+    },
+    "changePasswordSuccess": {
+      "actions": {
+        "continue": "Continue"
+      },
+      "description": "Welcome back,\nLet's continue saving your love memories with Lovespace! ❤️",
+      "labels": {
+        "formTitle": "your password has been changed"
+      },
+      "title": "Change Password Success"
+    },
+    "comment":{
+      "actions" :{
+      },
+      "labels":{},
+      "messages":{},
+      "remoteErrors":{
+      }
+    },
+    "review":{
+      "actions" :{
+        "send":"Send"
+      },
+      "labels":{},
+      "messages":{},
+      "remoteErrors":{
+      }
+    }
+}
+}
+    

@@ -1,7 +1,6 @@
 import perfumeApi from "./perfumeApi";
 import userApi from "./userApi";
-import authorApi from "./authorApi";
 import authApi from "./authApi";
-import categoryApi from "./categoryApi";
+import reviewApi from "./reviewApi";
 
-export { perfumeApi, userApi, authorApi, categoryApi, authApi };
+export { perfumeApi, userApi, authApi, reviewApi };

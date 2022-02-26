@@ -1,6 +1,6 @@
 import axiosClient from "./axiosClient";
 // api/productApi.js
-const bookApi = {
+const perfumeApi = {
   getAll: (params) => {
     const url = "/perfumes";
     return axiosClient.get(url, { params });
@@ -23,4 +23,4 @@ const bookApi = {
     return axiosClient.delete(url);
   },
 };
-export default bookApi;
+export default perfumeApi;

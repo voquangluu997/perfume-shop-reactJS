@@ -12,6 +12,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import perfumeApi from "../api/perfumeApi";
 
 const Home = (props) => {
+  
   const [perfumeList, setPerfumeList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);

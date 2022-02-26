@@ -1,19 +1,30 @@
 import { DropdownButton, Dropdown } from "react-bootstrap";
-import { getUser } from "../Utils/Common";
+import { removeUserSession } from "../Utils/Common";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
-const Avatar = ({ user, logout }) => {
+const Avatar = ({ user, onSubmit }) => {
+  const [currUser, setCurrUser] = useState(user);
+
+  const handleSubmit = () => {
+    setCurrUser(null);
+    removeUserSession();
+    onSubmit({ currUser });
+  };
+
   return (
     <div className="btn-fixed d-flex align-items-center">
-      {getUser() ? (
+      {user ? (
         <DropdownButton
           id="dropdown-avatar"
           title={
-            <div
-              className="avatar-image"
-              style={{
-                backgroundImage: `url(${user.avatar})`,
-              }}
-            />
+            user.fullname
+            // <div
+            //   className="avatar-image"
+            //   style={{
+            //     backgroundImage: `url(${user.avatar})`,
+            //   }}
+            // />
           }
         >
           <Dropdown.Item href="/profile" className="username drop-item">
@@ -31,13 +42,15 @@ const Avatar = ({ user, logout }) => {
           </Dropdown.Item>
           <Dropdown.Divider />
 
-          <Dropdown.Item as="button" className="drop-item" onClick={logout}>
-            Logout
+          <Dropdown.Item as="button" className="drop-item">
+            <Link to="/login" onClick={handleSubmit}>
+              Logout
+            </Link>
           </Dropdown.Item>
         </DropdownButton>
       ) : (
         <a href="/login" className="btn btn-warning btn-sm">
-          Login/Register
+          Login
         </a>
       )}
     </div>

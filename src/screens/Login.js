@@ -28,7 +28,6 @@ const Login = (props) => {
     );
     window.addEventListener("message", (message) => {
       if (message) {
-        console.log(message);
         setUserSession(
           message.data.userInfo.accessToken,
           message.data.userInfo.user
@@ -80,7 +79,6 @@ const Login = (props) => {
         });
         console.log(user);
         setUserSession(response.data.accessToken, user.data);
-        setUserSession('x','y');
         props.history.push("/");
       })
       .catch((error) => {
