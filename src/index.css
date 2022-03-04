@@ -57,9 +57,9 @@ code {
   color: #2c7613;
 }
 
-.content {
+/* .content {
   padding: 20px;
-}
+} */
 
 .error {
   margin-bottom: 10px;
@@ -372,8 +372,6 @@ input {
   background-size: cover;
 }
 
-
-
 .send-icon {
   font-size: 1.5rem;
 }
@@ -443,9 +441,39 @@ label {
   align-items: center;
 }
 
+.review-star {
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
 .display-center {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.filter {
+  overflow-y: auto;
+  /* height: 100px; */
+}
+
+.display-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.display-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.display-around {
+  display: flex;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -454,6 +482,45 @@ label {
   justify-content: start;
   align-items: center;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f1f1f1;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.filter-link a:link {
+  text-decoration: none;
+}
+
+.filter-link a:visited {
+  text-decoration: none;
+}
+
+.filter-link a:hover {
+  text-decoration: underline;
+}
+
+.filter-link a:active {
+  text-decoration: underline;
+}
+/* 
+.filter-link {
+  color: "#000";
+} */
 
 .review-left h2 {
   color: #fe302e;
@@ -479,13 +546,24 @@ label {
   padding: 1rem;
   border-radius: 2rem;
 }
-
-.border-white-box h3 {
+.avatar-image .border-white-box h3 {
   text-transform: uppercase;
   font-weight: 800;
   color: #11bba3;
 }
 
+#dropdown-avatar::after {
+  display: none;
+}
+
+#dropdown-avatar::before {
+  display: none;
+}
+
+.avatar-small {
+  width: 1.6rem !important;
+  height: 1.6rem !important;
+}
 .get-shadow {
   border-radius: 3% !important;
   box-shadow: 10px 10px 5px #333 !important;
@@ -524,15 +602,24 @@ label {
 }
 .text-table-title {
   color: #11bba3;
-  font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   text-transform: uppercase;
 }
 
+.td-input {
+  padding: 0 !important;
+  width: 2.7rem;
+}
+
+.btn-remove:hover {
+  font-size: 120%;
+}
+
 .text-table-content {
   color: white;
-  font-weight: 600;
+  font-weight: 800;
+  font-size: 1.2rem;
 }
 
 .btn-social {

@@ -3,7 +3,10 @@ export const CART_MESSAGES = (mess) => {
     case "added":
       return "ADDED TO CART SUCCESSFULLY!";
 
+    case "cartEmpty":
+      return "YOUR CART IS EMPTY!";
+
     default:
-      return " something went wrong, please check again";
+      return " Your cart is being loading..";
   }
 };

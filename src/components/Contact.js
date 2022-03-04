@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-import { FaFacebook, FaGithub, FaEnvelope } from "react-icons/fa";
+import { FaFacebook, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
 const Contact = () => {
   return (
@@ -18,7 +18,7 @@ const Contact = () => {
             href="https://github.com/voquangluu997?tab=repositories"
           >
             <li>
-              <FaGithub />
+              <FaPhoneAlt />
             </li>
           </a>
           <a target="_blank" href="mailto:voquangluu997@gmail.com">

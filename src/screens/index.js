@@ -3,5 +3,17 @@ import Login from "./Login";
 import Register from "./Register";
 import Home from "./Home";
 import PerfumeDetail from "./PerfumeDetail";
+import Cart from "./Cart";
+import Booking from "./Booking";
+import BookingDetails from "./BookingDetails";
 
-export { Page404, PerfumeDetail, Login, Register, Home };
+export {
+  Page404,
+  PerfumeDetail,
+  Login,
+  Register,
+  Home,
+  Cart,
+  Booking,
+  BookingDetails,
+};

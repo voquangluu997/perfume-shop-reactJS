@@ -10,6 +10,10 @@ export const BUTTONS = (mess) => {
       return "View cart";
     case "keepShopping":
       return "Keep shopping";
+    case "confirm":
+      return "Confirm";
+    case "cancel":
+      return "Cancel";
 
     default:
       return " something went wrong, please check again";

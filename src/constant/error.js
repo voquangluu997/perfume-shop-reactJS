@@ -39,3 +39,23 @@ export const PERFUME_ERRORS = (err) => {
       return " something went wrong, please check again";
   }
 };
+
+export const CART_ERRORS = (err) => {
+  switch (err) {
+    case "Unauthorized":
+      return "Required to Login!";
+    default:
+      return " something went wrong, please check again";
+  }
+};
+
+export const BOOKING_ERRORS = (err) => {
+  switch (err) {
+    case "Unauthorized":
+      return "Required to Login!";
+    case "BOOKING_NO_ITEM":
+      return "Your cart is empty";
+    default:
+      return " something went wrong, please check again";
+  }
+};

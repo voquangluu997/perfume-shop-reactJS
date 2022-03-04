@@ -7,15 +7,18 @@ import {
   Pagination,
   SearchBar,
   Loading,
+  Filter,
+  StarAvg,
 } from "../components";
 import { Container, Row, Col } from "react-bootstrap";
 import perfumeApi from "../api/perfumeApi";
 
 const Home = (props) => {
-  
   const [perfumeList, setPerfumeList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
+  const [mess, setMess] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [searchKey, setSearchKey] = useState({
     page: 1,
     limit: 6,
@@ -33,17 +36,37 @@ const Home = (props) => {
     totalRows: 0,
   });
 
+  const handleFilter = async (perfumes) => {
+    setPerfumeList(perfumes.perfume.data);
+    setPagination(perfumes.perfume.pagination);
+    setReviews(perfumes.perfume.reviews);
+  };
+
   useEffect(() => {
+    if (props.history.location.state) {
+      if (props.history.location.state.perfume) {
+        const pf = props.history.location.state.perfume;
+        setPerfumeList(pf.data);
+        setPagination(pf.pagination);
+        setReviews(pf.reviews);
+      }
+      if (props.history.location.state.searchText) {
+        let sk = searchKey;
+        sk = { ...sk, search: props.history.location.state.searchText };
+        setSearchKey(sk);
+      }
+    }
     const fetchPerfumeList = async () => {
       setLoading(true);
       try {
         const response = await perfumeApi.getAll(searchKey);
-        const { data } = response;
+        const { data, pagination, reviews } = response;
         if (data.length == 0)
-          setErr("Oops! Perfumes not found, Please try it again");
+          setErr(`Search result for key: "${searchKey.search}" Not found `);
         else setErr("");
         setPerfumeList(data);
-        setPagination(response.pagination);
+        setPagination(pagination);
+        setReviews(reviews);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -57,18 +80,6 @@ const Home = (props) => {
     setSearchKey({ ...searchKey, page: newPage });
   }
 
-  const handleLogout = () => {
-    removeUserSession();
-    props.history.push("/login");
-  };
-
-  const handleSearchChildChange = (filters) => {
-    setSearchChild({
-      ...searchChild,
-      // ...{ category: filters.category, author: filters.author },
-    });
-  };
-
   const handleFilterChange = (newFilters) => {
     setSearchKey({
       ...searchKey,
@@ -76,49 +87,69 @@ const Home = (props) => {
         search: newFilters.searchText,
         page: 1,
       },
-      // ...searchChild,
     });
   };
 
   return (
     <Container fluid>
-      <Heading title="perfumes"></Heading>
-      <div>
-        {/* <SearchChild onSubmit={handleSearchChildChange} /> */}
-        <SearchBar onSubmit={handleFilterChange}></SearchBar>
-      </div>
+      <Heading title="LV PERFUME SHOP"></Heading>
+      <SearchBar onSubmit={handleFilterChange}></SearchBar>
+
       {loading ? (
         <div className="d-flex justify-content-center">
           <Loading />
         </div>
       ) : (
-        <Row className="d-flex justify-content-center">
-          <span style={{ marginBottom: "10px", fontWeight: "600" }}>
-            Total matched: {pagination.totalRows}
-          </span>
-          {perfumeList?.map((perfume, i) => {
-            return (
-              <Col
-                lg="3"
-                md="6"
-                className="d-flex justify-content-center"
-                key={i}
+        <Row>
+          <Col sm={2}>
+            <Filter onSubmit={handleFilter} />
+          </Col>
+          <Col sm={10}>
+            <Row className="d-flex justify-content-center">
+              <span
+                style={{
+                  marginBottom: "10px",
+                  fontWeight: "800",
+                  marginLeft: "3rem",
+                }}
               >
-                <PerfumeItem perfume={perfume}></PerfumeItem>
-              </Col>
-            );
-          })}
-          {err && <p className="mb-3 alert alert-danger noti">{err}</p>}
-          <Pagination
-            className="mt-4"
-            pagination={pagination}
-            onPageChange={handlePageChange}
-            search={searchKey}
-          ></Pagination>
+                {searchKey?.search ? (
+                  <p
+                    style={{ fontSize: "1.2rem" }}
+                  >{`Search result for key: "${searchKey.search}": `}</p>
+                ) : (
+                  ""
+                )}
+                Total matched: {perfumeList?.length}
+              </span>
+
+              {perfumeList?.map((perfume, i) => {
+                return (
+                  <Col
+                    lg="3"
+                    md="6"
+                    className="d-flex justify-content-center"
+                    key={i}
+                  >
+                    <PerfumeItem
+                      perfume={perfume}
+                      reviews={reviews[i]}
+                    ></PerfumeItem>
+                  </Col>
+                );
+              })}
+              {err && <p className="mb-3 alert alert-danger noti">{err}</p>}
+            </Row>
+            <div style={{ marginTop: "3.5rem" }}>
+              <Pagination
+                pagination={pagination}
+                onPageChange={handlePageChange}
+                search={searchKey}
+              ></Pagination>
+            </div>
+          </Col>
         </Row>
       )}
-
-      {/* <Avatar user={getUser()} logout={handleLogout}></Avatar> */}
     </Container>
   );
 };

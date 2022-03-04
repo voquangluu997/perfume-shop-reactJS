@@ -27,7 +27,7 @@ function SearchBar(props) {
     <form className="d-flex justify-content-center search-form">
       <FormControl
         type="search"
-        placeholder="Search..."
+        placeholder="Search in shop..."
         className="mr-2 search-input"
         aria-label="Search"
         onChange={handleInput}

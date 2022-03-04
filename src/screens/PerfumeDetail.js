@@ -7,12 +7,14 @@ import {
   Review,
   Pagination,
   Dialog,
+  Filter,
+  SearchBar,
 } from "../components";
 import { Container, Col, Row } from "react-bootstrap";
-import { perfumeApi, reviewApi } from "../api";
-import { Link } from "react-router-dom";
+import { perfumeApi, reviewApi, cartApi } from "../api";
 import DayJS from "react-dayjs";
-import { BUTTONS } from "../constant";
+import { BUTTONS, CART_ERRORS } from "../constant";
+import { FaShoppingCart } from "react-icons/fa";
 
 const PerfumeDetail = ({ match, history }) => {
   const [perfumeDetails, setPerfumeDetails] = useState({});
@@ -24,11 +26,19 @@ const PerfumeDetail = ({ match, history }) => {
   const [searchKey, setSearchKey] = useState({
     page: 1,
     limit: 6,
-    // search: "",
+    search: "",
     // category: "",
     // author: "",
     // sort: "ASC",
   });
+
+  const handleFilterChange = (newFilters) => {
+    history.push({
+      pathname: "/",
+      state: { searchText: newFilters.searchText },
+    });
+  };
+
   const [searchChild, setSearchChild] = useState({
     // category: "", author: ""
   });
@@ -80,36 +90,58 @@ const PerfumeDetail = ({ match, history }) => {
   const updateShow = (getShow) => {
     setShow(getShow.show);
   };
-  const handleDelete = async () => {
-    setLoading(true);
+
+  const handleBuyNow = async () => {
     try {
-      await perfumeApi.delete(perfumeDetails.id);
-      setMess(`Perfume with id ${perfumeDetails.id} has been deleted`);
-      setLoading(false);
+      await cartApi.add({
+        perfumeId: match.params.id,
+        quatity: 1,
+      });
+      history.push("/cart");
+      window.location.reload();
     } catch (error) {
-      setLoading(false);
-      typeof error.response.data.message == "object"
-        ? setMess(`${error.response.data.message[0]}`)
-        : setMess(`${error.response.data.message}`);
-      console.log(error);
+      alert(CART_ERRORS(error.response.data.message));
     }
   };
 
-  const handleLogout = () => {
-    removeUserSession();
-    history.push("/login");
+  const handleAddToCart = async () => {
+    try {
+      await cartApi.add({
+        perfumeId: match.params.id,
+        quatity: 1,
+      });
+      setShow(true);
+    } catch (error) {
+      console.log(error.response.data);
+      alert(CART_ERRORS(error.response.data.message));
+    }
   };
+
+  const handleFilter = (data) => {
+    const perfume = data.perfume;
+    history.push({
+      pathname: "/",
+      state: {
+        // from: location,
+        perfume,
+      },
+    });
+  };
+
   return (
-    <Container fluid className="container">
-      <Heading title={perfumeDetails.name}></Heading>
-      {/* <Avatar user={getUser()} logout={handleLogout}></Avatar> */}
+    <Container className="container">
+      {/* <Heading title={perfumeDetails.name}></Heading> */}
+      <SearchBar onSubmit={handleFilterChange}></SearchBar>
       {loading || !perfumeDetails.brand || !perfumeDetails.fragrance ? (
         <div className="d-flex justify-content-center">
           <Loading />
         </div>
       ) : (
         <Row className="details">
-          <Col md="6" xs="12" className=" d-flex justify-content-end box">
+          <Col md={2} style={{ marginTop: "-10rem" }}>
+            <Filter onSubmit={handleFilter} />
+          </Col>
+          <Col md={4} xs="12" className=" d-flex justify-content-end box">
             <CardPerfumeDetail perfume={perfumeDetails}></CardPerfumeDetail>
           </Col>
 
@@ -127,9 +159,19 @@ const PerfumeDetail = ({ match, history }) => {
                   className="d-flex justify-content-center align-items-center btn btn-auth btn-light btn-outlight price-large"
                 > */}
                 <label>
-                  <h2>
+                  <h2 className="display-around">
+                    <b
+                      className="price"
+                      style={{ color: "#fff", marginRight: "1.4rem" }}
+                    >
+                      {perfumeDetails?.price.toLocaleString()} <sup>đ</sup>
+                    </b>
+
                     <b className="price">
-                      {perfumeDetails?.price.toLocaleString()} đ
+                      <del>
+                        {(perfumeDetails?.price * 1.05).toLocaleString()}{" "}
+                      </del>
+                      <sup>đ</sup>
                     </b>
                   </h2>
                 </label>
@@ -169,8 +211,8 @@ const PerfumeDetail = ({ match, history }) => {
                   className="d-flex justify-content-around"
                   style={{ marginTop: "2rem" }}
                 >
-                  <Link
-                    to={`/card`}
+                  <button
+                    onClick={handleBuyNow}
                     className="btn btn-outline-warning btn-outlight"
                     style={{
                       width: "46%",
@@ -178,18 +220,19 @@ const PerfumeDetail = ({ match, history }) => {
                     }}
                   >
                     {BUTTONS("buyNow")}
-                  </Link>
+                  </button>
 
                   <button
-                    onClick={() => {
-                      setShow(true);
-                    }}
+                    onClick={handleAddToCart}
                     className=" btn btn-outline-light btn-outlight"
                     style={{
                       width: "46%",
                     }}
                   >
-                    {BUTTONS("addToCart")}
+                    <div className="display-center">
+                      <FaShoppingCart style={{ marginRight: ".5rem" }} />
+                      {BUTTONS("addToCart")}{" "}
+                    </div>
                   </button>
 
                   <Dialog
