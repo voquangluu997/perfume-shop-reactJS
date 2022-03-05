@@ -24,7 +24,7 @@ const Register = (props) => {
         password,
         fullname,
         phone,
-        address
+        address,
       })
       .then(async (response) => {
         setLoading(false);
@@ -60,7 +60,6 @@ const Register = (props) => {
               <Form.Control
                 className="btn btn-outline-light"
                 type="email"
-                className="btn btn-outline-light"
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -110,7 +109,6 @@ const Register = (props) => {
                 onChange={(e) => setPhone(e.target.value)}
               />
             </Form.Group> */}
-
 
             {err && <p className="mb-3 alert alert-danger noti">{err}</p>}
             <div className="d-flex justify-content-center">

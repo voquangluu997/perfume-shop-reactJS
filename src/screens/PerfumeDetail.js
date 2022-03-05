@@ -1,23 +1,62 @@
 import React, { useState, useEffect } from "react";
-import { getUser, removeUserSession } from "../Utils/Common";
-import { Heading, Avatar, CardPerfumeDetail, Loading } from "../components";
+import { removeUserSession } from "../Utils/Common";
+import {
+  Heading,
+  CardPerfumeDetail,
+  Loading,
+  Review,
+  Pagination,
+  Dialog,
+  Filter,
+  SearchBar,
+} from "../components";
 import { Container, Col, Row } from "react-bootstrap";
-import perfumeApi from "../api/perfumeApi";
-import { Link } from "react-router-dom";
+import { perfumeApi, reviewApi, cartApi } from "../api";
 import DayJS from "react-dayjs";
+import { BUTTONS, CART_ERRORS } from "../constant";
+import { FaShoppingCart } from "react-icons/fa";
 
 const PerfumeDetail = ({ match, history }) => {
   const [perfumeDetails, setPerfumeDetails] = useState({});
+  const [reviews, setReviews] = useState({});
   const [loading, setLoading] = useState(false);
   const [mess, setMess] = useState("");
+  const [show, setShow] = useState(false);
+
+  const [searchKey, setSearchKey] = useState({
+    page: 1,
+    limit: 6,
+    search: "",
+    // category: "",
+    // author: "",
+    // sort: "ASC",
+  });
+
+  const handleFilterChange = (newFilters) => {
+    history.push({
+      pathname: "/",
+      state: { searchText: newFilters.searchText },
+    });
+  };
+
+  const [searchChild, setSearchChild] = useState({
+    // category: "", author: ""
+  });
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limit: 10,
+    totalRows: 0,
+  });
 
   useEffect(() => {
     const fetchPerfumeDetails = async () => {
       setLoading(true);
       try {
         const response = await perfumeApi.getById(match.params.id);
+        const listReview = await reviewApi.getAll(match.params.id, searchKey);
         setPerfumeDetails(response);
-        console.log(response);
+        setReviews(listReview);
+        setPagination(listReview.pagination);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -25,38 +64,84 @@ const PerfumeDetail = ({ match, history }) => {
       }
     };
     fetchPerfumeDetails();
-  }, []);
+  }, [searchKey]);
 
-  const handleDelete = async () => {
-    setLoading(true);
+  function handlePageChange(newPage) {
+    setSearchKey({ ...searchKey, page: newPage });
+
+    const handleSearchChildChange = (filters) => {
+      setSearchChild({
+        ...searchChild,
+        // ...{ category: filters.category, author: filters.author },
+      });
+    };
+
+    const handleFilterChange = (newFilters) => {
+      setSearchKey({
+        ...searchKey,
+        ...{
+          search: newFilters.searchText,
+          page: 1,
+        },
+        // ...searchChild,
+      });
+    };
+  }
+  const updateShow = (getShow) => {
+    setShow(getShow.show);
+  };
+
+  const handleBuyNow = async () => {
     try {
-      await perfumeApi.delete(perfumeDetails.id);
-      setMess(`Perfume with id ${perfumeDetails.id} has been deleted`);
-      setLoading(false);
+      await cartApi.add({
+        perfumeId: match.params.id,
+        quatity: 1,
+      });
+      history.push("/cart");
+      window.location.reload();
     } catch (error) {
-      setLoading(false);
-      typeof error.response.data.message == "object"
-        ? setMess(`${error.response.data.message[0]}`)
-        : setMess(`${error.response.data.message}`);
-      console.log(error);
+      alert(CART_ERRORS(error.response.data.message));
     }
   };
 
-  const handleLogout = () => {
-    removeUserSession();
-    history.push("/login");
+  const handleAddToCart = async () => {
+    try {
+      await cartApi.add({
+        perfumeId: match.params.id,
+        quatity: 1,
+      });
+      setShow(true);
+    } catch (error) {
+      console.log(error.response.data);
+      alert(CART_ERRORS(error.response.data.message));
+    }
   };
+
+  const handleFilter = (data) => {
+    const perfume = data.perfume;
+    history.push({
+      pathname: "/",
+      state: {
+        // from: location,
+        perfume,
+      },
+    });
+  };
+
   return (
-    <Container fluid className="container">
-      <Heading title={perfumeDetails.name}></Heading>
-      {/* <Avatar user={getUser()} logout={handleLogout}></Avatar> */}
+    <Container className="container">
+      {/* <Heading title={perfumeDetails.name}></Heading> */}
+      <SearchBar onSubmit={handleFilterChange}></SearchBar>
       {loading || !perfumeDetails.brand || !perfumeDetails.fragrance ? (
-        <div class="d-flex justify-content-center">
+        <div className="d-flex justify-content-center">
           <Loading />
         </div>
       ) : (
         <Row className="details">
-          <Col md="6" xs="12" className=" d-flex justify-content-end box">
+          <Col md={2} style={{ marginTop: "-10rem" }}>
+            <Filter onSubmit={handleFilter} />
+          </Col>
+          <Col md={4} xs="12" className=" d-flex justify-content-end box">
             <CardPerfumeDetail perfume={perfumeDetails}></CardPerfumeDetail>
           </Col>
 
@@ -74,14 +159,23 @@ const PerfumeDetail = ({ match, history }) => {
                   className="d-flex justify-content-center align-items-center btn btn-auth btn-light btn-outlight price-large"
                 > */}
                 <label>
-                  <h2>
+                  <h2 className="display-around">
+                    <b
+                      className="price"
+                      style={{ color: "#fff", marginRight: "1.4rem" }}
+                    >
+                      {perfumeDetails?.price.toLocaleString()} <sup>đ</sup>
+                    </b>
+
                     <b className="price">
-                      {perfumeDetails?.price.toLocaleString()} đ
+                      <del>
+                        {(perfumeDetails?.price * 1.05).toLocaleString()}{" "}
+                      </del>
+                      <sup>đ</sup>
                     </b>
                   </h2>
                 </label>
                 <br></br>
-                {/* </button> */}
                 <label> Brand: </label>
                 <span className="text-nowrap">
                   {" "}
@@ -95,68 +189,75 @@ const PerfumeDetail = ({ match, history }) => {
                 </span>
                 <br />
                 <label> Publish year:</label>
-                <span> <DayJS format="MM-DD-YYYY" className="text-nowrap">
+                <span>
+                  {" "}
+                  <DayJS format="YYYY" className="text-nowrap">
                     {perfumeDetails.publishYear}
                   </DayJS>
                 </span>
+                <br />
+
+                <label> Sex: </label>
+                <span className="text-nowrap"> {perfumeDetails.sex}</span>
+                <br />
+                <label> Origin: </label>
+                <span className="text-nowrap"> {perfumeDetails.origin}</span>
 
                 <br />
               </div>
 
               <div className="footer-details">
-                {/* <div className="d-flex justify-content-center">
-                  <button
-                    style={{
-                      width: "60%",
-                    }}
-                    className="d-flex justify-content-center align-items-center btn btn-auth btn-light btn-outlight"
-                  >
-                    Price :{perfumeDetails?.price}$
-                  </button>
-                </div> */}
-
                 <div
                   className="d-flex justify-content-around"
                   style={{ marginTop: "2rem" }}
                 >
-                  <Link
-                    to={`${perfumeDetails.id}/update`}
-                    className=" btn btn-dark btn-outlight"
-                    style={{
-                      width: "46%",
-                    }}
-                  >
-                    Edit
-                  </Link>
                   <button
-                    onClick={handleDelete}
-                    className="btn btn-danger btn-outlight"
+                    onClick={handleBuyNow}
+                    className="btn btn-outline-warning btn-outlight"
                     style={{
                       width: "46%",
                       backgroundColor: "dan",
                     }}
                   >
-                    Delete
+                    {BUTTONS("buyNow")}
                   </button>
+
+                  <button
+                    onClick={handleAddToCart}
+                    className=" btn btn-outline-light btn-outlight"
+                    style={{
+                      width: "46%",
+                    }}
+                  >
+                    <div className="display-center">
+                      <FaShoppingCart style={{ marginRight: ".5rem" }} />
+                      {BUTTONS("addToCart")}{" "}
+                    </div>
+                  </button>
+
+                  <Dialog
+                    item={perfumeDetails}
+                    isShow={show}
+                    onSubmit={updateShow}
+                  />
                 </div>
               </div>
             </div>
           </Col>
 
-          <div>
-            {mess && mess == "Update password succesfuly" ? (
-              <p className="mb-3 alert alert-success noti">{mess}</p>
-            ) : (
-              mess && <p className="mb-3 alert alert-danger noti">{mess}</p>
-            )}
-          </div>
-
-          <div className="description">
+          <div className="border-white-box">
             <h3> Description </h3>
             <div>
               <span>{perfumeDetails.about} </span>
             </div>
           </div>
+          <Review listReview={reviews} searchKey={searchKey} />
+          <Pagination
+            className="mt-4"
+            pagination={pagination}
+            onPageChange={handlePageChange}
+            search={searchKey}
+          ></Pagination>
         </Row>
       )}
       {/* <div>{perfumeDetails.title}</div> */}

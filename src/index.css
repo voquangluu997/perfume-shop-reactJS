@@ -57,9 +57,9 @@ code {
   color: #2c7613;
 }
 
-.content {
+/* .content {
   padding: 20px;
-}
+} */
 
 .error {
   margin-bottom: 10px;
@@ -91,6 +91,31 @@ h3.heading {
   height: 0.2rem;
   background-color: #1ebba3;
   margin: 0 auto 2rem;
+}
+
+.heading-small {
+  width: 98%;
+  height: 0.1rem;
+  background-color: #fff;
+  opacity: 0.5;
+}
+
+.review-row {
+  margin: -5px 0;
+}
+
+.heading-review {
+  width: 90%;
+  height: 0.08rem;
+  background-color: #fff;
+  opacity: 0.5;
+  margin: 0 0.5rem;
+  display: flex;
+}
+
+.review-text {
+  color: white !important;
+  font-size: 1.3rem !important;
 }
 
 .heading-underline-long {
@@ -231,7 +256,7 @@ h3.heading {
 }
 
 .header-details {
-  height: 22%;
+  height: 12%;
 }
 
 .header-details h2 {
@@ -339,6 +364,18 @@ input {
   text-transform: uppercase;
 }
 
+.user-avatar {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+}
+
+.send-icon {
+  font-size: 1.5rem;
+}
+
 .btn-auth {
   /* background-color: #11bba3 !important; */
   color: #11bba3 !important;
@@ -398,23 +435,135 @@ label {
   }
 }
 
+.review-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-star {
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.display-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter {
+  overflow-y: auto;
+  /* height: 100px; */
+}
+
+.display-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.display-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.display-around {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.display-start {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f1f1f1;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.filter-link a:link {
+  text-decoration: none;
+}
+
+.filter-link a:visited {
+  text-decoration: none;
+}
+
+.filter-link a:hover {
+  text-decoration: underline;
+}
+
+.filter-link a:active {
+  text-decoration: underline;
+}
+/* 
+.filter-link {
+  color: "#000";
+} */
+
+.review-left h2 {
+  color: #fe302e;
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+.review-star-left {
+  font-size: 1.4rem;
+}
+
+.review-star-right {
+  font-size: 1.2rem;
+}
+
 .box-price {
   position: absolute;
   bottom: 1rem;
 }
 
-.description {
+.border-white-box {
   border: solid 1px;
   padding: 1rem;
   border-radius: 2rem;
 }
-
-.description h3 {
+.avatar-image .border-white-box h3 {
   text-transform: uppercase;
   font-weight: 800;
   color: #11bba3;
 }
 
+#dropdown-avatar::after {
+  display: none;
+}
+
+#dropdown-avatar::before {
+  display: none;
+}
+
+.avatar-small {
+  width: 1.6rem !important;
+  height: 1.6rem !important;
+}
 .get-shadow {
   border-radius: 3% !important;
   box-shadow: 10px 10px 5px #333 !important;
@@ -453,15 +602,24 @@ label {
 }
 .text-table-title {
   color: #11bba3;
-  font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   text-transform: uppercase;
 }
 
+.td-input {
+  padding: 0 !important;
+  width: 2.7rem;
+}
+
+.btn-remove:hover {
+  font-size: 120%;
+}
+
 .text-table-content {
   color: white;
-  font-weight: 600;
+  font-weight: 800;
+  font-size: 1.2rem;
 }
 
 .btn-social {
@@ -608,6 +766,21 @@ button i {
   border-radius: 2rem;
   font-size: 10px;
 }
+.review-comment {
+  /* display: flex; */
+  /* justify-content:space-around ; */
+  /* align-items: center; */
+}
+
+.review-comment-box {
+  text-align: left !important;
+  padding-left: -10px !important ;
+  /* width: 90% !important; */
+  max-width: 800px !important;
+  max-height: 400px !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+}
 
 .scroll-bar {
   animation: mover 1s infinite alternate;
@@ -615,7 +788,7 @@ button i {
 
 .price {
   font-size: 30px;
-  color: #11bba3
+  color: #11bba3;
 }
 
 @keyframes mover {

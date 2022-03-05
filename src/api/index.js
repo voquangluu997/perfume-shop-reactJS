@@ -1,7 +1,18 @@
 import perfumeApi from "./perfumeApi";
 import userApi from "./userApi";
-import authorApi from "./authorApi";
 import authApi from "./authApi";
-import categoryApi from "./categoryApi";
-
-export { perfumeApi, userApi, authorApi, categoryApi, authApi };
+import reviewApi from "./reviewApi";
+import cartApi from "./cartApi";
+import bookingApi from "./bookingApi";
+import brandApi from "./brandApi";
+import fragranceApi from "./fragranceApi";
+export {
+  perfumeApi,
+  userApi,
+  authApi,
+  reviewApi,
+  cartApi,
+  bookingApi,
+  fragranceApi,
+  brandApi,
+};

@@ -13,12 +13,12 @@ const Login = (props) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
 
-  // useEffect(() => {
-  //   setAuthMess(null);
-  //   props.history.location.state
-  //     ? setAuthMess(props.history.location.state.authMess)
-  //     : setAuthMess(null);
-  // }, [loading]);
+  useEffect(() => {
+    setAuthMess(null);
+    props.history.location.state
+      ? setAuthMess(props.history.location.state.authMess)
+      : setAuthMess(null);
+  }, [loading]);
 
   const handleGoogleLogin = async () => {
     window.open(
@@ -28,13 +28,13 @@ const Login = (props) => {
     );
     window.addEventListener("message", (message) => {
       if (message) {
-        console.log(message);
         setUserSession(
           message.data.userInfo.accessToken,
           message.data.userInfo.user
         );
 
         props.history.push("/");
+        window.location.reload();
       } else {
       }
       return message;
@@ -54,6 +54,7 @@ const Login = (props) => {
           message.data.userInfo.user
         );
         props.history.push("/");
+        window.location.reload();
       } else {
       }
       return message;
@@ -61,8 +62,6 @@ const Login = (props) => {
   };
 
   const handleLogin = () => {
-    props.history.push("/");
-
     setErr(null);
     setLoading(true);
     axios
@@ -78,10 +77,9 @@ const Login = (props) => {
             Authorization: `Bearer ${response.data.accessToken}`,
           },
         });
-        console.log(user);
         setUserSession(response.data.accessToken, user.data);
-        setUserSession('x','y');
         props.history.push("/");
+        window.location.reload();
       })
       .catch((error) => {
         setLoading(false);

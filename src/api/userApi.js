@@ -1,16 +1,17 @@
 import axiosClient from "./axiosClient";
 const userApi = {
-  getProfile: () => {
-    const url = "/profiles";
+  getUser: () => {
+    const url = "/users";
     return axiosClient.get(url);
   },
+
   updateProfile: (userInfo) => {
-    const url = `/profiles`;
+    const url = `/users`;
     return axiosClient.patch(url, userInfo);
   },
-  updatePassword: (password) => {
-    const url = "profiles/update-password";
-    return axiosClient.patch(url, password);
-  },
+  // updatePassword: (password) => {
+  //   const url = "profiles/update-password";
+  //   return axiosClient.patch(url, password);
+  // },
 };
 export default userApi;
