@@ -70,7 +70,7 @@ const Home = (props) => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        setErr(error.response.message);
+        setErr("Something went wrong, Please try it later");
       }
     };
     fetchPerfumeList();

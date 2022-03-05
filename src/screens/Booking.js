@@ -34,8 +34,9 @@ const Booking = (props) => {
         setPagination(response.pagination);
         setLoading(false);
       } catch (error) {
+        alert("xxx");
         setLoading(false);
-        setErr(error.response.message);
+        console.log(error);
       }
     };
     fetchBookings();
@@ -112,7 +113,11 @@ const Booking = (props) => {
           })}
         </tbody>
       </Table>
-      <Pagination pagination={pagination} />
+      <Pagination
+        pagination={pagination}
+        onPageChange={handlePageChange}
+        search={searchKey}
+      />
     </Container>
   );
 };

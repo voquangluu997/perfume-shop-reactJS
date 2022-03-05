@@ -86,7 +86,7 @@ const BookingDetails = ({ match, history }) => {
                   <FaCheckCircle
                     style={{ color: "green", marginRight: "10px" }}
                   />
-                  {heading.status}
+                  {heading?.status}
 
                   <span>
                     <FaRegClock

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { PublicRoute, PrivateRoute } from "./Utils";
+import { PublicRoute, PrivateRoute, AdminRoute } from "./Utils";
 import { MyNavbar, Footer, Contact, Avatar } from "./components";
 import { Row, Col } from "react-bootstrap";
 import MessengerCustomerChat from "react-messenger-customer-chat";
@@ -14,6 +14,7 @@ import {
   Cart,
   Booking,
   BookingDetails,
+  Admin,
 } from "./screens";
 import { cartApi, userApi } from "./api";
 import { getUser } from "./Utils/Common";
@@ -58,10 +59,10 @@ const App = (props) => {
         <div className="row dark">
           <div style={{ padding: "2rem" }}>
             <BrowserRouter>
-              <MessengerCustomerChat
+              {/* <MessengerCustomerChat
                 pageId="2405136319710067"
                 appId="194021341961519"
-              />
+              /> */}
 
               <div className="headers">
                 <MyNavbar
@@ -103,6 +104,21 @@ const App = (props) => {
                     path="/booking/:id"
                     component={BookingDetails}
                   ></PrivateRoute>
+                  <AdminRoute
+                    exact
+                    path="/admin"
+                    component={Admin}
+                  ></AdminRoute>
+                  <AdminRoute
+                    exact
+                    path="/admin/ana"
+                    component={Admin}
+                  ></AdminRoute>
+                  <AdminRoute
+                    exact
+                    path="/admin/add"
+                    component={Admin}
+                  ></AdminRoute>
 
                   <Route path="*" component={Page404} />
                 </Switch>
