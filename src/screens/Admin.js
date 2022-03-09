@@ -72,7 +72,7 @@ const Admin = (props) => {
         <div style={{ margin: "2rem" }}>
           {" "}
           <a href="/admin/add">
-            <Button variant="success">thêm sản phẩm mới</Button>
+            <Button variant="success">Quản lý sản phẩm</Button>
           </a>
         </div>
       </div>

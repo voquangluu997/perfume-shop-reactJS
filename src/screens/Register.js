@@ -48,7 +48,7 @@ const Register = (props) => {
   return (
     <Container fluid>
       <div>
-        <h3 className="heading">Đăng ký</h3>
+        <h3 className="heading">register</h3>
         <div className="heading-underline"></div>
       </div>
 
@@ -123,7 +123,7 @@ const Register = (props) => {
             </div>
             <a href="/login" className="d-flex mt-3 alert-link text-light link">
               {" "}
-              Tôi đã đăng ký tài khoản trước đó{" "}
+              Already have account? Login now{" "}
             </a>
           </Form>
         </Row>

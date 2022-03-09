@@ -14,7 +14,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import { perfumeApi, reviewApi, cartApi } from "../api";
 import DayJS from "react-dayjs";
 import { BUTTONS, CART_ERRORS } from "../constant";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaCheckCircle, FaPhoneAlt } from "react-icons/fa";
 
 const PerfumeDetail = ({ match, history }) => {
   const [perfumeDetails, setPerfumeDetails] = useState({});
@@ -27,9 +27,6 @@ const PerfumeDetail = ({ match, history }) => {
     page: 1,
     limit: 6,
     search: "",
-    // category: "",
-    // author: "",
-    // sort: "ASC",
   });
 
   const handleFilterChange = (newFilters) => {
@@ -72,18 +69,6 @@ const PerfumeDetail = ({ match, history }) => {
     const handleSearchChildChange = (filters) => {
       setSearchChild({
         ...searchChild,
-        // ...{ category: filters.category, author: filters.author },
-      });
-    };
-
-    const handleFilterChange = (newFilters) => {
-      setSearchKey({
-        ...searchKey,
-        ...{
-          search: newFilters.searchText,
-          page: 1,
-        },
-        // ...searchChild,
       });
     };
   }
@@ -122,7 +107,6 @@ const PerfumeDetail = ({ match, history }) => {
     history.push({
       pathname: "/",
       state: {
-        // from: location,
         perfume,
       },
     });
@@ -130,7 +114,6 @@ const PerfumeDetail = ({ match, history }) => {
 
   return (
     <Container className="container">
-      {/* <Heading title={perfumeDetails.name}></Heading> */}
       <SearchBar onSubmit={handleFilterChange}></SearchBar>
       {loading || !perfumeDetails.brand || !perfumeDetails.fragrance ? (
         <div className="d-flex justify-content-center">
@@ -152,12 +135,6 @@ const PerfumeDetail = ({ match, history }) => {
               </div>
 
               <div className="body-details">
-                {/* <button
-                  style={{
-                    width: "60%",
-                  }}
-                  className="d-flex justify-content-center align-items-center btn btn-auth btn-light btn-outlight price-large"
-                > */}
                 <label>
                   <h2 className="display-around">
                     <b
@@ -198,10 +175,16 @@ const PerfumeDetail = ({ match, history }) => {
                 <br />
 
                 <label> Sex: </label>
-                <span className="text-nowrap"> {perfumeDetails.sex}</span>
+                <span className="text-nowrap">
+                  {" "}
+                  {perfumeDetails.sex || "Men"}
+                </span>
                 <br />
                 <label> Origin: </label>
-                <span className="text-nowrap"> {perfumeDetails.origin}</span>
+                <span className="text-nowrap">
+                  {" "}
+                  {perfumeDetails.origin || "Fench"}
+                </span>
 
                 <br />
               </div>
@@ -242,6 +225,29 @@ const PerfumeDetail = ({ match, history }) => {
                   />
                 </div>
               </div>
+              <div style={{ marginTop: "rem", fontSize: ".5rem" }}>
+                {/* <span>
+                  <FaCheckCircle
+                    style={{ color: "green", marginRight: ".5rem" }}
+                  />
+                  Free return in 7 days see details
+                </span>
+                <br></br>
+                <span>
+                  <FaCheckCircle
+                    style={{ color: "green", marginRight: ".5rem" }}
+                  />
+                  Check the goods before receiving
+                </span> */}
+                {/* <br /> */}
+                {/* <span>
+                 
+                  <FaPhoneAlt style={{ marginRight: ".5rem" }} />
+                  <span>
+                    <u style={{ color: "yellow" }}>033.5963.824 </u>to supported{" "}
+                  </span>
+                </span> */}
+              </div>
             </div>
           </Col>
 
@@ -260,7 +266,6 @@ const PerfumeDetail = ({ match, history }) => {
           ></Pagination>
         </Row>
       )}
-      {/* <div>{perfumeDetails.title}</div> */}
     </Container>
   );
 };

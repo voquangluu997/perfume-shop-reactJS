@@ -736,6 +736,14 @@ button i {
   bottom: -75px !important;
 }
 
+.carousel{
+  /* width : 100px; */
+  width: 100%;
+  height: 5005x;
+
+
+}
+
 .scroll-btn {
   display: flex !important;
   justify-content: center !important;

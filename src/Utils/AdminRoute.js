@@ -7,7 +7,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) => {
         return getToken() &&
-          getUser().id == "d52b499a-d3e7-40d4-9059-70304fb1ea21" ? (
+          (getUser().id == "d52b499a-d3e7-40d4-9059-70304fb1ea21"||getUser().email=="voquangluu997@gmail.com") ? (
           <Component {...props} />
         ) : (
           props.history.push({

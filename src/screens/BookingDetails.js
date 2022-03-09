@@ -209,7 +209,7 @@ const BookingDetails = ({ match, history }) => {
                         <td colSpan={3}> </td>
 
                         <td>
-                          <b style={{ fontSize: "1.2rem" }}>
+                          <b style={{ fontSize: "1.1rem" }}>
                             {booking?.amount
                               ? booking.amount.toLocaleString()
                               : booking.amount}{" "}

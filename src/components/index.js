@@ -12,13 +12,15 @@ import Review from "./Review";
 import Comment from "./Comment";
 import Dialog from "./Dialog";
 import CartItem from "./CartItem";
-import CardImg from './CardImg'
-import CartList from './CartList';
-import ShippingAddress from './ShippingAddress';
-import Filter from './Filter';
-import StarAvg from './StarAvg';
+import CardImg from "./CardImg";
+import CartList from "./CartList";
+import ShippingAddress from "./ShippingAddress";
+import Filter from "./Filter";
+import StarAvg from "./StarAvg";
+import Slide from "./Slide";
 export {
   StarAvg,
+  Slide,
   ShippingAddress,
   Filter,
   Heading,

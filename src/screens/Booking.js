@@ -118,6 +118,8 @@ const Booking = (props) => {
         onPageChange={handlePageChange}
         search={searchKey}
       />
+                {/* <Slide /> */}
+
     </Container>
   );
 };

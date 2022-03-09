@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { PublicRoute, PrivateRoute, AdminRoute } from "./Utils";
-import { MyNavbar, Footer, Contact, Avatar } from "./components";
+import { MyNavbar, Footer, Contact, Avatar, Slide, Heading } from "./components";
 import { Row, Col } from "react-bootstrap";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 
@@ -56,6 +56,7 @@ const App = (props) => {
         className="fixed-background"
         style={{ backgroundImage: `url(/uploads/bg5.jpg)` }}
       >
+        <MyNavbar user={user} onSubmit={handleAvatar} cart={cart.length} />
         <div className="row dark">
           <div style={{ padding: "2rem" }}>
             <BrowserRouter>
@@ -63,14 +64,7 @@ const App = (props) => {
                 pageId="2405136319710067"
                 appId="194021341961519"
               /> */}
-
-              <div className="headers">
-                <MyNavbar
-                  user={user}
-                  onSubmit={handleAvatar}
-                  cart={cart.length}
-                ></MyNavbar>
-              </div>
+              <div className="headers"></div>
               <div className="content">
                 <Switch>
                   <Route
@@ -126,7 +120,12 @@ const App = (props) => {
             </BrowserRouter>
           </div>
           <div className="foot">
-            <Footer />
+            <div style={ {margin:"2rem", borderRadius:"100px"}}>
+              <Heading title="Promotions"/>
+              <Slide />
+            </div>
+
+            <Footer  />
           </div>
         </div>
       </div>

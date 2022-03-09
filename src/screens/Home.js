@@ -9,6 +9,7 @@ import {
   Loading,
   Filter,
   StarAvg,
+  Slide
 } from "../components";
 import { Container, Row, Col } from "react-bootstrap";
 import perfumeApi from "../api/perfumeApi";
@@ -21,14 +22,10 @@ const Home = (props) => {
   const [reviews, setReviews] = useState([]);
   const [searchKey, setSearchKey] = useState({
     page: 1,
-    limit: 6,
+    limit: 20,
     search: "",
-    // category: "",
-    // author: "",
-    // sort: "ASC",
   });
   const [searchChild, setSearchChild] = useState({
-    // category: "", author: ""
   });
   const [pagination, setPagination] = useState({
     page: 1,
@@ -91,7 +88,7 @@ const Home = (props) => {
   };
 
   return (
-    <Container fluid>
+    <div >
       <Heading title="LV PERFUME SHOP"></Heading>
       <SearchBar onSubmit={handleFilterChange}></SearchBar>
 
@@ -140,7 +137,7 @@ const Home = (props) => {
               })}
               {err && <p className="mb-3 alert alert-danger noti">{err}</p>}
             </Row>
-            <div style={{ marginTop: "3.5rem" }}>
+            <div style={{ marginTop: "-0.5rem" }}>
               <Pagination
                 pagination={pagination}
                 onPageChange={handlePageChange}
@@ -150,7 +147,55 @@ const Home = (props) => {
           </Col>
         </Row>
       )}
-    </Container>
+
+
+<Row style ={{marginTop:"2.5rem"}}>
+          <Col sm={2}>
+          </Col>
+          <Col sm={10}>
+            <Heading title = "recommend for you"/>
+            <Row className="d-flex justify-content-center">
+              <span
+                style={{
+                  marginTop: "10px",
+                }}
+              >
+                
+              </span>
+
+              {perfumeList?.map((perfume, i) => {
+                let j = perfumeList?.length -i-1;
+                if(i>2)
+                return (
+                  <Col
+                    lg="3"
+                    md="6"
+                    className="d-flex justify-content-center"
+                    key={j}
+                  >
+                    <PerfumeItem
+                      perfume={perfumeList[j]}
+                      reviews={reviews[j]}
+                    ></PerfumeItem>
+                  </Col>
+                );
+              })}
+              {err && <p className="mb-3 alert alert-danger noti">{err}</p>}
+            </Row>
+            <div style={{}}>
+              <Pagination
+                pagination={pagination}
+                onPageChange={handlePageChange}
+                search={searchKey}
+              ></Pagination>
+            </div>
+          </Col>
+        </Row>
+
+
+      
+          {/* <Slide /> */}
+    </div>
   );
 };
 
