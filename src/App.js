@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { PublicRoute, PrivateRoute, AdminRoute } from "./Utils";
-import { MyNavbar, Footer, Contact, Avatar, Slide, Heading } from "./components";
+import {
+  MyNavbar,
+  Footer,
+  Contact,
+  Avatar,
+  Slide,
+  Heading,
+} from "./components";
 import { Row, Col } from "react-bootstrap";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 
@@ -60,10 +67,10 @@ const App = (props) => {
         <div className="row dark">
           <div style={{ padding: "2rem" }}>
             <BrowserRouter>
-              {/* <MessengerCustomerChat
+              <MessengerCustomerChat
                 pageId="2405136319710067"
-                appId="194021341961519"
-              /> */}
+                appId="1090255354883066"
+              />
               <div className="headers"></div>
               <div className="content">
                 <Switch>
@@ -120,12 +127,12 @@ const App = (props) => {
             </BrowserRouter>
           </div>
           <div className="foot">
-            <div style={ {margin:"2rem", borderRadius:"100px"}}>
-              <Heading title="Promotions"/>
+            <div style={{ margin: "2rem", borderRadius: "100px" }}>
+              <Heading title="Promotions" />
               <Slide />
             </div>
 
-            <Footer  />
+            <Footer />
           </div>
         </div>
       </div>
