@@ -28,5 +28,10 @@ const BookingApi = {
     const url = `/bookings/${id}`;
     return axiosClient.delete(url);
   },
+
+  createPayment: (params) => {
+    const url = `/bookings/create-payment-url`;
+    return axiosClient.post(url, params);
+  },
 };
 export default BookingApi;
