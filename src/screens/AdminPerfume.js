@@ -66,7 +66,7 @@ const AdminPerfume = (props) => {
         </div>
         <div style={{ margin: "2rem" }}>
           {" "}
-          <a href="/admin/add">
+          <a href="/admin/perfume">
             <Button variant="success">Quản lý sản phẩm</Button>
           </a>
         </div>
@@ -81,125 +81,30 @@ const AdminPerfume = (props) => {
           <Table striped bordered hover variant="dark">
             <thead>
               <tr>
-                <th style={{ textAlign: "center" }}>#</th>
-                {searchKey.sort == "DESC" ? (
-                  <th
-                    style={{ textAlign: "center" }}
-                    onClick={() => {
-                      setSearchKey({
-                        ...searchKey,
-                        order: "time",
-                        sort: "ASC",
-                      });
-                    }}
-                  >
-                    <span>Time </span>
-                    <FaSortAmountDown stype={{ marginLeft: "1rem" }} />
-                  </th>
-                ) : (
-                  <th
-                    style={{ textAlign: "center" }}
-                    onClick={() => {
-                      setSearchKey({
-                        ...searchKey,
-                        order: "time",
-                        sort: "DESC",
-                      });
-                    }}
-                  >
-                    <span>Time </span>
-                    <FaSortAmountUp stype={{ marginLeft: "1rem" }} />
-                  </th>
-                )}
-                <th style={{ textAlign: "center" }}>Order Codes</th>
-                <th
-                  style={{ textAlign: "center" }}
-                  onClick={() => {
-                    searchKey?.status == "ORDERING"
-                      ? setSearchKey({ ...searchKey, status: "ORDERED" })
-                      : searchKey?.status == "ORDERED"
-                      ? setSearchKey({ ...searchKey, status: "" })
-                      : setSearchKey({ ...searchKey, status: "ORDERING" });
-                  }}
-                >
-                  {" "}
-                  <span>
-                    Status
-                    <FaFilter style={{ marginLeft: ".3rem" }} />
-                  </span>
-                </th>
-                <th style={{ textAlign: "center" }}>Details</th>
-                <th style={{ textAlign: "center" }}>
-                  <FaPhoneAlt style={{ marginRight: ".2rem" }} />
-                  Customer
-                </th>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
               </tr>
             </thead>
             <tbody>
-              {perfumes?.data?.map((perfume, i) => {
-                return (
-                  <tr>
-                    <td style={{ textAlign: "center" }}>{i + 1}</td>
-                    <td style={{ textAlign: "center" }}>
-                      <DayJS format="YYYY-MM-DD HH:MM" className="text-nowrap">
-                        {perfume?.createdAt}
-                      </DayJS>
-                    </td>
-
-                    <td style={{ textAlign: "center" }}>
-                      <p> {perfume.id}</p>
-                    </td>
-
-                    <td style={{ textAlign: "center" }}>
-                      <div>
-                        {perfume?.status == "ORDERING" ? (
-                          <button
-                            className="btn btn-danger"
-                            onClick={async () => {
-                              try {
-                                const up = await perfumeApi.approveOrder(
-                                  perfume.id,
-                                  searchKey
-                                );
-                                console.log({ up });
-                                setPerfumes(up);
-                              } catch (error) {
-                                console.log(error);
-                              }
-                            }}
-                          >
-                            APPROVE NOW
-                          </button>
-                        ) : (
-                          <span>
-                            <FaCheckCircle
-                              style={{ color: "green", marginRight: ".2rem" }}
-                            />
-                            APPROVED
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td
-                      style={{ textAlign: "center" }}
-                      onClick={() => {
-                        props.history.push(`/perfume/${perfume.id}`);
-                      }}
-                    >
-                      <u>View Details</u>
-                    </td>
-
-                    <td
-                      style={{ textAlign: "center" }}
-                      onClick={() => {
-                        props.history.push(`/perfume/${perfume.id}`);
-                      }}
-                    >
-                      <span>{perfume?.user?.phone}</span>
-                    </td>
-                  </tr>
-                );
-              })}
+              <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td colSpan={2}>Larry the Bird</td>
+                <td>@twitter</td>
+              </tr>
             </tbody>
           </Table>
           <Pagination
