@@ -22,6 +22,7 @@ import {
   Booking,
   BookingDetails,
   Admin,
+  AdminPerfume,
 } from "./screens";
 import { cartApi, userApi } from "./api";
 import { getUser } from "./Utils/Common";
@@ -120,6 +121,12 @@ const App = (props) => {
                     path="/admin/add"
                     component={Admin}
                   ></AdminRoute>
+
+                  <Route
+                    exact
+                    path="/admin/perfume"
+                    component={AdminPerfume}
+                  ></Route>
 
                   <Route path="*" component={Page404} />
                 </Switch>

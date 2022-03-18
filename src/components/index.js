@@ -18,7 +18,9 @@ import ShippingAddress from "./ShippingAddress";
 import Filter from "./Filter";
 import StarAvg from "./StarAvg";
 import Slide from "./Slide";
+import AdminFilter from "./AdminFilter";
 export {
+  AdminFilter,
   StarAvg,
   Slide,
   ShippingAddress,

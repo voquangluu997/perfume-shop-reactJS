@@ -7,6 +7,7 @@ import Cart from "./Cart";
 import Booking from "./Booking";
 import BookingDetails from "./BookingDetails";
 import Admin from "./Admin";
+import AdminPerfume from "./AdminPerfume";
 
 export {
   Page404,
@@ -17,5 +18,6 @@ export {
   Cart,
   Booking,
   BookingDetails,
-  Admin
+  Admin,
+  AdminPerfume,
 };
