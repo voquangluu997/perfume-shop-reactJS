@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Heading, Pagination, Loading, ShippingAddress } from "../components";
 import {
-  Container,
-  Table,
-  DropdownButton,
-  Dropdown,
-  Button,
-} from "react-bootstrap";
+  Heading,
+  Pagination,
+  Loading,
+  CardImg,
+  SearchBar,
+} from "../components";
+import { Container, Table, Button } from "react-bootstrap";
 import { perfumeApi, bookingApi } from "../api";
-import DayJS from "react-dayjs";
 import {
   FaSortAmountUp,
   FaSortAmountDown,
   FaPhoneAlt,
   FaCheckCircle,
   FaFilter,
+  FaRegEdit,
+  FaTrashAlt,
 } from "react-icons/fa";
 
 const AdminPerfume = (props) => {
@@ -26,11 +27,29 @@ const AdminPerfume = (props) => {
     limit: 15,
   });
 
+  const [info, setInfo] = useState({
+    name: "",
+    price: "",
+    publishYear: "",
+    sex: "",
+    origin: "",
+  });
+
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 15,
     totalRows: 0,
   });
+
+  const handleFilterChange = (newFilters) => {
+    setSearchKey({
+      ...searchKey,
+      ...{
+        search: newFilters.searchText,
+        page: 1,
+      },
+    });
+  };
 
   useEffect(() => {
     const fetchPerfumes = async () => {
@@ -42,6 +61,7 @@ const AdminPerfume = (props) => {
         setPerfumes(response);
         setPagination(response.pagination);
         setLoading(false);
+        console.log(response);
       } catch (error) {
         setLoading(false);
         // setErr(error.response.message);
@@ -57,6 +77,7 @@ const AdminPerfume = (props) => {
   return (
     <Container fluid>
       <Heading title="Quản lý sản phẩm"></Heading>
+      {/* <SearchBar onSubmit={handleFilterChange}></SearchBar> */}
       <div className="display-center" style={{ width: "100%" }}>
         <div style={{ margin: "2rem" }}>
           {" "}
@@ -77,34 +98,57 @@ const AdminPerfume = (props) => {
         </div>
       ) : (
         <div>
-          (
           <Table striped bordered hover variant="dark">
             <thead>
               <tr>
                 <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
+                <th>image</th>
+                <th>name</th>
+                <th>price</th>
+                <th>publish year</th>
+                <th>sex</th>
+                <th>origin</th>
+                <th>Options</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td colSpan={2}>Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
+              {perfumes?.data?.map((item, i) => {
+                return (
+                  <tr>
+                    <td style={{ textAlign: "center" }}>{i + 1}</td>
+                    <td className="display-center">
+                      <CardImg width={3} height={3} src={item.image}></CardImg>
+                    </td>
+                    <td style={{ textAlign: "center" }}>{item.name}</td>
+                    <td style={{ textAlign: "center" }}>
+                      {`${item.price.toLocaleString()}`} <sup>đ</sup>
+                    </td>
+                    <td style={{ textAlign: "center" }}>{item.publishYear}</td>
+                    <td style={{ textAlign: "center" }}>{item.sex}</td>
+                    <td style={{ textAlign: "center" }}> {item.origin}</td>
+                    <td>
+                      <div style={{ textAlign: "center" }}>
+                        <FaRegEdit
+                          style={{ margin: "0 3px", color: "#198754" }}
+                        ></FaRegEdit>
+                        <FaTrashAlt
+                          style={{ margin: "0 3px", color: "#E91E63" }}
+                          onclick={async () => {
+                            try {
+                              await perfumeApi.delete(item.id);
+                              alert(
+                                `Product with id ${item.id} has been deleted`
+                              );
+                            } catch (error) {
+                              alert("Delete failed, please try it later");
+                            }
+                          }}
+                        ></FaTrashAlt>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
           <Pagination

@@ -200,7 +200,8 @@ const BookingDetails = ({ match, history }) => {
                         <td colSpan={3}> </td>
 
                         <td>
-                          {(11000).toLocaleString()} <sup>đ</sup>
+                          {booking.method == "CASH" ? (11000).toLocaleString() : 0}{" "}
+                          <sup>đ</sup>
                         </td>
                       </tr>
 

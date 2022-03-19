@@ -34,7 +34,6 @@ const Booking = (props) => {
         setPagination(response.pagination);
         setLoading(false);
       } catch (error) {
-        alert("xxx");
         setLoading(false);
         console.log(error);
       }

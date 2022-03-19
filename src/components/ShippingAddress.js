@@ -27,6 +27,7 @@ const ShippingAddress = ({ cart, finalPrice, onSubmit }) => {
   const [shippingFee, setShippingFee] = useState(11000);
   const [show, setShow] = useState(false);
   const [booking, setBooking] = useState(null);
+  const [paymentUrl, setPaymentUrl] = useState(null);
 
   useEffect(() => {
     const getUser = async () => {
@@ -73,7 +74,7 @@ const ShippingAddress = ({ cart, finalPrice, onSubmit }) => {
     try {
       let rs = await bookingApi.add({
         method,
-        amount: finalPrice,
+        amount: (finalPrice + shippingFee)*100,
         status: "ORDERING",
         address: address || user.address,
         phone: phone || user.phone,
@@ -196,8 +197,9 @@ const ShippingAddress = ({ cart, finalPrice, onSubmit }) => {
                         type="radio"
                         id="block-radio-1"
                         onChange={() => {
-                          setMethod("cash");
+                          setMethod("CASH");
                           setShippingFee(11000);
+                          setPaymentUrl(null);
                         }}
                       />
 
@@ -207,9 +209,17 @@ const ShippingAddress = ({ cart, finalPrice, onSubmit }) => {
                         name="group1"
                         type="radio"
                         id="block-radio-2"
-                        onChange={() => {
-                          setMethod("debit");
+                        onChange={async () => {
+                          setMethod("DEBIT");
                           setShippingFee(0);
+                          const url = await bookingApi.createPayment({
+                            amount: finalPrice + shippingFee,
+                            bankCode: "",
+                            orderInfo: "info",
+                            orderType: "string",
+                            language: "vi",
+                          });
+                          setPaymentUrl(url);
                         }}
                       />
                     </div>
@@ -241,7 +251,7 @@ const ShippingAddress = ({ cart, finalPrice, onSubmit }) => {
                   <div className="display-between">
                     <p>Discount</p>
                     <b>
-                      {`-0`}
+                      {`-${shippingFee}`}
                       <sup>đ</sup>
                     </b>
                   </div>
@@ -254,14 +264,30 @@ const ShippingAddress = ({ cart, finalPrice, onSubmit }) => {
                     </b>
                   </div>
 
-                  <div
-                    className=" display-center btn btn-md btn-warning btn-outlight p-2 "
-                    disabled={loading}
-                    onClick={handleBooking}
-                    style={{ width: "100%" }}
-                  >
-                    {loading ? "Loading..." : "process to payment"}
-                  </div>
+                  {paymentUrl ? (
+                    <div
+                      className=" display-center btn btn-md btn-warning btn-outlight p-2 "
+                      disabled={loading}
+                      style={{ width: "100%" }}
+                    >
+                      <a
+                        href={paymentUrl}
+                        style={{ color: "#000", textDecoration: "none" }}
+                      >
+                        {" "}
+                        {loading ? "Loading..." : "process to payment"}
+                      </a>
+                    </div>
+                  ) : (
+                    <div
+                      className=" display-center btn btn-md btn-warning btn-outlight p-2 "
+                      disabled={loading}
+                      onClick={handleBooking}
+                      style={{ width: "100%" }}
+                    >
+                      {loading ? "Loading..." : "process to payment"}
+                    </div>
+                  )}
                 </Card.Title>
               </Card.Body>
             </Card>

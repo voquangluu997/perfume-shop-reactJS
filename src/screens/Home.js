@@ -9,10 +9,11 @@ import {
   Loading,
   Filter,
   StarAvg,
-  Slide
+  Slide,
 } from "../components";
 import { Container, Row, Col } from "react-bootstrap";
 import perfumeApi from "../api/perfumeApi";
+import { FaSortAmountDownAlt, FaSortAmountUpAlt } from "react-icons/fa";
 
 const Home = (props) => {
   const [perfumeList, setPerfumeList] = useState([]);
@@ -21,17 +22,19 @@ const Home = (props) => {
   const [mess, setMess] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [searchKey, setSearchKey] = useState({
-    page: 1,
-    limit: 20,
-    search: "",
+    page: "1",
+    limit: "15",
+    order: "",
+    sort: "ASC",
+    // search: "",
   });
-  const [searchChild, setSearchChild] = useState({
-  });
+  const [searchChild, setSearchChild] = useState({});
   const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 10,
+    page: "1",
+    limit: "15",
     totalRows: 0,
   });
+  const [up, setUp] = useState(false);
 
   const handleFilter = async (perfumes) => {
     setPerfumeList(perfumes.perfume.data);
@@ -88,7 +91,7 @@ const Home = (props) => {
   };
 
   return (
-    <div >
+    <div>
       <Heading title="LV PERFUME SHOP"></Heading>
       <SearchBar onSubmit={handleFilterChange}></SearchBar>
 
@@ -103,7 +106,7 @@ const Home = (props) => {
           </Col>
           <Col sm={10}>
             <Row className="d-flex justify-content-center">
-              <span
+              <div
                 style={{
                   marginBottom: "10px",
                   fontWeight: "800",
@@ -117,8 +120,42 @@ const Home = (props) => {
                 ) : (
                   ""
                 )}
-                Total matched: {perfumeList?.length}
-              </span>
+
+                <span style={{ marginRight: "2rem" }}>
+                  {" "}
+                  Total matched: {perfumeList?.length}
+                </span>
+                <button
+                  className="btn btn-outline-light btn-medium "
+                  onClick={() => {
+                    if (up == false){
+                      setSearchKey({
+                        ...searchKey,
+                        order: "price",
+                        sort: "ASC",
+                      });
+                      setUp(true);
+                    }
+                     
+                    else{setSearchKey({
+                      ...searchKey,
+                      order: "price",
+                      sort: "DESC",
+                    });
+                    setUp(false)
+
+                    }
+                      
+                  }}
+                >
+                  Price 
+                  {searchKey.order == "price" && searchKey.sort == "ASC" ? (
+                    <FaSortAmountDownAlt style = {{marginLeft:"7px"}}/>
+                  ) : (
+                    <FaSortAmountUpAlt style = {{marginLeft:"7px"}} />
+                  )}
+                </button>
+              </div>
 
               {perfumeList?.map((perfume, i) => {
                 return (
@@ -148,24 +185,20 @@ const Home = (props) => {
         </Row>
       )}
 
+      <Row style={{ marginTop: "2.5rem" }}>
+        <Col sm={2}></Col>
+        <Col sm={10}>
+          <Heading title="recommend for you" />
+          <Row className="d-flex justify-content-center">
+            <span
+              style={{
+                marginTop: "10px",
+              }}
+            ></span>
 
-<Row style ={{marginTop:"2.5rem"}}>
-          <Col sm={2}>
-          </Col>
-          <Col sm={10}>
-            <Heading title = "recommend for you"/>
-            <Row className="d-flex justify-content-center">
-              <span
-                style={{
-                  marginTop: "10px",
-                }}
-              >
-                
-              </span>
-
-              {perfumeList?.map((perfume, i) => {
-                let j = perfumeList?.length -i-1;
-                if(i>2)
+            {perfumeList?.map((perfume, i) => {
+              let j = perfumeList?.length - i - 1;
+              if (i > 2)
                 return (
                   <Col
                     lg="3"
@@ -179,22 +212,20 @@ const Home = (props) => {
                     ></PerfumeItem>
                   </Col>
                 );
-              })}
-              {err && <p className="mb-3 alert alert-danger noti">{err}</p>}
-            </Row>
-            <div style={{}}>
-              <Pagination
-                pagination={pagination}
-                onPageChange={handlePageChange}
-                search={searchKey}
-              ></Pagination>
-            </div>
-          </Col>
-        </Row>
+            })}
+            {err && <p className="mb-3 alert alert-danger noti">{err}</p>}
+          </Row>
+          <div style={{}}>
+            <Pagination
+              pagination={pagination}
+              onPageChange={handlePageChange}
+              // search={searchKey}
+            ></Pagination>
+          </div>
+        </Col>
+      </Row>
 
-
-      
-          {/* <Slide /> */}
+      {/* <Slide /> */}
     </div>
   );
 };

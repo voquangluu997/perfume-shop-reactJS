@@ -13,6 +13,7 @@ const Cart = () => {
   const [quatity, setQuatity] = useState([]);
   const [finalPrice, setFinalPrice] = useState(0);
   const [isChangeQuatity, setIsChangeQuatity] = useState(false);
+  const [shippingF, setShippingF] = useState(11000);
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 10,
@@ -22,9 +23,6 @@ const Cart = () => {
     page: 1,
     limit: 6,
     search: "",
-    // category: "",
-    // author: "",
-    // sort: "ASC",
   });
 
   useEffect(() => {

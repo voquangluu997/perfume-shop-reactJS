@@ -8,8 +8,9 @@ import Booking from "./Booking";
 import BookingDetails from "./BookingDetails";
 import Admin from "./Admin";
 import AdminPerfume from "./AdminPerfume";
-
+// import  AddPerfume  from "./AddPerfume";
 export {
+// AddPerfume,
   Page404,
   PerfumeDetail,
   Login,
