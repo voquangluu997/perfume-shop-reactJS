@@ -74,7 +74,7 @@ const ShippingAddress = ({ cart, finalPrice, onSubmit }) => {
     try {
       let rs = await bookingApi.add({
         method,
-        amount: (finalPrice + shippingFee)*100,
+        amount: (finalPrice + shippingFee),
         status: "ORDERING",
         address: address || user.address,
         phone: phone || user.phone,
@@ -213,7 +213,7 @@ const ShippingAddress = ({ cart, finalPrice, onSubmit }) => {
                           setMethod("DEBIT");
                           setShippingFee(0);
                           const url = await bookingApi.createPayment({
-                            amount: finalPrice + shippingFee,
+                            amount: (finalPrice + shippingFee)*100,
                             bankCode: "",
                             orderInfo: "info",
                             orderType: "string",
